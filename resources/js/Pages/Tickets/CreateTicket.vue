@@ -1,18 +1,15 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import Breadcrumb from '@/Components/Breadcrumb.vue';
+import { priorities } from '@/Utils/priorities';
+import { statuses } from '@/Utils/statuses';
 
-const priorities = {
-    low: 'Low',
-    medium: 'Medium',
-    high: 'High',
-};
-
-const statuses = {
-    open: 'Open',
-    inProgress: 'In Progress',
-    closed: 'Closed',
-};
+const breadcrumbs = [
+    { text: 'Dashboard', link: '/dashboard' },
+    { text: 'Tickets', link: '/tickets' },
+    { text: 'Create', link: '' },
+];
 
 const form = useForm({
     title: '',
@@ -30,6 +27,10 @@ function submit() {
 
 <template>
     <AuthenticatedLayout>
+
+        <!-- Page Breadcrumbs -->
+        <Breadcrumb :breadcrumbs="breadcrumbs"> </Breadcrumb>
+
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <form @submit.prevent="submit">

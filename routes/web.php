@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,8 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    Route::resource('/tickets', \App\Http\Controllers\TicketsController::class);
-
+    Route::resource('/tickets', TicketsController::class);
+    Route::post('/tickets/filter', [TicketsController::class, 'filterTickets'])->name('tickets.filter');
 });
 
 require __DIR__.'/auth.php';

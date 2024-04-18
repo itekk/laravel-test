@@ -18,8 +18,27 @@ class TicketsController extends Controller
         $tickets = Ticket::with('user')
             ->orderBy('created_at', 'desc')
             ->get();
+            
         return inertia('Tickets/Index', [
             'tickets' => $tickets,
+            'totalItems' => $tickets->count(), 
+        ]);
+    }
+
+    /**
+     * Filter tickets based on the provided request filters and paginate the results.
+     */
+    public function filterTickets(Request $request)
+    {
+        $filters = $request->all();
+        $tickets = Ticket::filter($filters)
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate($request->per_page);
+        
+        return response()->json([
+            'tickets' => $tickets->items(),
+            'totalItems' => $tickets->total(),
         ]);
     }
 

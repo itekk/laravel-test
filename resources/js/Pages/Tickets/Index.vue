@@ -17,7 +17,7 @@ const breadcrumbs = [
 
 const props = defineProps({
     tickets: Array,
-    totalItems: Number, // Changed from Integer to Number
+    totalItems: Number,
 });
 
 const currentPage = ref(1);
@@ -41,9 +41,15 @@ const filters = ref({ ...initialFilters });
 
 // Function to handle the apply-filters event from FilterOptions component
 const handleApplyFilters = async (newFilters) => {
-    filters.value = { ...newFilters };
-    currentPage.value = 1;
-    await fetchFilteredTickets();
+    try {
+        // Update the filters and reset the current page
+        filters.value = { ...newFilters };
+        currentPage.value = 1;
+        await fetchFilteredTickets();
+    } catch (error) {
+        // Handle any errors that might occur during the process
+        console.error("An error occurred while applying filters:", error);
+    }
 };
 
 // Function to apply filters
@@ -70,9 +76,12 @@ const fetchFilteredTickets = async () => {
 
 // Function to handle page change event from Pagination component
 const handlePageChange = async (newPage) => {
-    currentPage.value = newPage;
-    // Fetch data based on the new page
-    await fetchFilteredTickets(initialFilters);
+    try {
+        currentPage.value = newPage;
+        await fetchFilteredTickets();
+    } catch (error) {
+        console.error('An error occurred while applying pagination:', error);
+    }
 };
 
 // Use watchEffect to keep track of changes to props and update state variables
@@ -81,13 +90,19 @@ watchEffect(() => {
     totalItems.value = props.totalItems;
 });
 
+// Computed property for paginated tickets
 const paginatedTickets = computed(() => {
     return filteredTickets.value;
 })
 
 // Fetch initial data on component mount
-onMounted(() => {
-    fetchFilteredTickets(initialFilters);
+onMounted(async () => {
+    try {
+        // Fetch initial filtered tickets data
+        await fetchFilteredTickets();
+    } catch (error) {
+        console.error('Error fetching initial data:', error);
+    }
 });
 </script>
 
@@ -112,9 +127,9 @@ onMounted(() => {
                     </Link>
                 </div>
             </div>
-            <div class="overflow-x-auto shadow  sm:rounded-lg">
+            <div class="overflow-x-auto shadow sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-700">
-                    <thead class="">
+                    <thead>
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                             ID
@@ -165,6 +180,4 @@ onMounted(() => {
             </div>
         </div>
     </AuthenticatedLayout>
-
 </template>
-

@@ -20,6 +20,7 @@ class PasswordController extends Controller
             'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
 
+        // Suggestion: Consider sending a notification to the user after a successful password change.
         $request->user()->update([
             'password' => Hash::make($validated['password']),
         ]);

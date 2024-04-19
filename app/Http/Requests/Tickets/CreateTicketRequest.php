@@ -8,9 +8,12 @@ class CreateTicketRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     * 
+     * @return bool
      */
     public function authorize(): bool
     {
+        // Suggestion: Add authorization logic to ensure only authorized users can create tickets.
         return true;
     }
 

@@ -18,9 +18,11 @@ const form = useForm({
     status: 'open',
 });
 
+// Suggestion: Add error handling to catch potential issues during form submission.
 function submit() {
     form.post('/tickets', {
-        onSuccess: () => form.reset('title', 'description', 'priority', 'status')
+        // Suggestion: Consider adding a success message to notify the user that the ticket has been created successfully.
+        onSuccess: () => form.reset('title', 'description', 'priority', 'status'),
     });
 }
 </script>
@@ -34,6 +36,7 @@ function submit() {
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <form @submit.prevent="submit">
+                    <!-- Suggestion: Implement CSRF token protection in forms to safeguard against CSRF vulnerabilities.-->
                     <div class="shadow overflow-hidden sm:rounded-md bg-gray-800 p-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">

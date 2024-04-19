@@ -58,6 +58,7 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
+        // Suggestion: Add exception handling to handle cases where the account deletion might fail
         return Redirect::to('/');
     }
 }

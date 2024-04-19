@@ -44,6 +44,7 @@ const updatePassword = () => {
         </header>
 
         <form @submit.prevent="updatePassword" class="mt-6 space-y-6">
+            <!-- Suggestion: Implement CSRF token protection in forms to safeguard against CSRF vulnerabilities.-->
             <div>
                 <InputLabel for="current_password" value="Current Password" />
 
@@ -91,6 +92,7 @@ const updatePassword = () => {
             <div class="flex items-center gap-4">
                 <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
 
+                <!-- Suggestion: Add more informative feedback for the user when the form submission is successful. -->
                 <Transition
                     enter-active-class="transition ease-in-out"
                     enter-from-class="opacity-0"

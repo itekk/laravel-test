@@ -33,6 +33,7 @@ const form = useForm({
         </header>
 
         <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
+            <!-- Suggestion: Implement CSRF token protection in forms to safeguard against CSRF vulnerabilities.-->
             <div>
                 <InputLabel for="name" value="Name" />
 
@@ -64,6 +65,7 @@ const form = useForm({
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
+            <!-- Suggestion: Consider extracting the email verification block to its own component. -->
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
                 <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
                     Your email address is unverified.
@@ -85,6 +87,7 @@ const form = useForm({
                 </div>
             </div>
 
+            <!-- Suggestion: Consider adding more feedback mechanisms to improve user experience. -->
             <div class="flex items-center gap-4">
                 <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
 

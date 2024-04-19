@@ -9,11 +9,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
 
 class Ticket extends Model
 {
     use HasFactory;
 
+    /**
+     * Attributes that can be mass-assigned.
+     */
     protected $fillable = [
         'user_id',
         'title',
@@ -22,22 +26,38 @@ class Ticket extends Model
         'status',
     ];
 
+    /**
+     * Cast 'status' and 'priority' attributes to enums.
+     */
     protected $casts = [
         'status' => TicketStatus::class,
         'priority' => TicketPriority::class,
     ];
 
+    /**
+     * A ticket belongs to a user.
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * A ticket can have many responses.
+     */
     public function responses(): HasMany
     {
         return $this->hasMany(Response::class);
     }
 
-    public function scopeFilter($query, $filters)
+    /**
+     * Scope to filter tickets based on provided filters.
+     *
+     * @param Builder $query The Eloquent query builder
+     * @param array $filters An array of filters to apply
+     * @return Builder The query builder with filters applied
+     */
+    public function scopeFilter(Builder $query, array $filters): Builder
     {
         // Early return if no filters are provided
         if (empty($filters)) {

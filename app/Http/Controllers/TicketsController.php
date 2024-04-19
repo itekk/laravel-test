@@ -8,6 +8,9 @@ use App\Http\Requests\Tickets\CreateTicketRequest;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 
+/**
+ * Suggestion: Add authorization checks for create, store, edit, update, and destroy methods to ensure only authorized users can perform these actions.
+ */
 class TicketsController extends Controller
 {
     /**
@@ -77,6 +80,8 @@ class TicketsController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * 
+     * Suggestion: Implement editing functionality for the specified ticket.
      */
     public function edit(string $id)
     {
@@ -85,6 +90,8 @@ class TicketsController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * 
+     * Suggestion: Implement update functionality for the specified ticket.
      */
     public function update(Request $request, string $id)
     {
